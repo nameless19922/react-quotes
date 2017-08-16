@@ -1,24 +1,35 @@
-const gulp         = require('gulp'),
-      del          = require('del'),
-      cssnano      = require('gulp-cssnano'),
-      concat       = require('gulp-concat'),
-      rename       = require('gulp-rename'),
-      uglify       = require('gulp-uglify'),
-      server       = require('gulp-webserver'),
-      watch        = require('gulp-watch'),
-      autoprefixer = require('gulp-autoprefixer'),
-      named        = require('vinyl-named'),
-      less         = require('gulp-less'),
-      webpack      = require('webpack-stream'),
-      plumber      = require('gulp-plumber'),
-      webConfig    = require('./webpack.config.js');
+const gulp         = require('gulp');
+const del          = require('del');
+const cssnano      = require('gulp-cssnano');
+const concat       = require('gulp-concat');
+const rename       = require('gulp-rename');
+const uglify       = require('gulp-uglify');
+const server       = require('gulp-webserver');
+const watch        = require('gulp-watch');
+const autoprefixer = require('gulp-autoprefixer');
+const named        = require('vinyl-named');
+const less         = require('gulp-less');
+const webpack      = require('webpack-stream');
+const plumber      = require('gulp-plumber');
+const gulpif       = require('gulp-if');
+const nunjucks     = require('gulp-nunjucks-render');
+const webConfig    = require('./webpack.config.js');
 
 gulp.task('clean', () => {
   return del(['dist']);
 });
 
 gulp.task('html', () => {
-  return gulp.src(['app/templates/*.html'])
+  gulp.src('app/templates/*.html')
+    .pipe(plumber({
+      errorHandler: err => {
+        console.log(err);
+        this.emit('end');
+      }
+    }))
+    .pipe(nunjucks({
+      path: ['app/templates']
+    }))
     .pipe(gulp.dest('dist'));
 });
 
@@ -37,27 +48,38 @@ gulp.task('less', () => {
     .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('js', () => {
-  return gulp.src(['app/js/*.js'])
-    .pipe(named())
-    .pipe(webpack(webConfig))
-    .pipe(gulp.dest('dist/js'));
-});
-
-gulp.task('vendor', () => {
+gulp.task('vendor:js', () => {
   return gulp.src(['app/vendor/*.js'])
+    .pipe(plumber({
+      errorHandler: function (err) {
+        console.log(err);
+        this.emit('end');
+      }
+    }))
+    .pipe(gulpif('!*.min.js', uglify()))
     .pipe(concat('vendor.min.js'))
-    .pipe(uglify())
     .pipe(gulp.dest('dist/vendor'));
 });
 
-gulp.task('js:watch', () => {
+gulp.task('js:bundle', () => {
+  return gulp.src(['app/js/*.bundle.js'])
+  .pipe(named())
+  .pipe(webpack(webConfig))
+  .pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('js', function () {
+  gulp.src('app/js/*.js')
+  .pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('js:bundle:watch', () => {
   const watch = Object.create(webConfig);
 
   watch.watch = true;
 
   return gulp.src([
-    'app/js/*.js'
+    'app/js/*.bundle.js'
   ])
     .pipe(plumber())
     .pipe(named())
@@ -87,30 +109,34 @@ gulp.task('serve', () => {
 });
 
 gulp.task('watch', () => {
-  watch('app/templates/*', () => {
+  watch('app/templates/**', () => {
     gulp.start('html');
   });
     
-  watch('app/less/**/*', () => {
+  watch('app/less/**/**', () => {
     gulp.start('less');
   });
 
-  watch('app/vendor/*', () => {
+  gulp.watch('app/js/**', function () {
+    gulp.start('script');
+  });
+
+  watch('app/vendor/**', () => {
     gulp.start('vendor');
   });
-    
-  watch('app/img/*', () => {
+
+  watch('app/img/**', () => {
     gulp.start('img');
   });
     
-  watch('app/fonts/*', () => {
+  watch('app/fonts/**', () => {
     gulp.start('fonts');
   });
     
-  gulp.start('js:watch');
+  gulp.start('js:bundle:watch');
 });
 
-gulp.task('build', ['html', 'less', 'js', 'vendor', 'img', 'fonts']);
+gulp.task('build', ['html', 'less', 'js', 'js:bundle', 'vendor:js', 'img', 'fonts']);
 
 gulp.task('default', ['clean'], () => {
   gulp.start('build');

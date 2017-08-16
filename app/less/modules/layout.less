@@ -1,21 +1,24 @@
-.layout {
-    padding: 90px;
-    
-    &__wrapper {
-        max-width: 780px;
-        width: 90%;
-        margin: 0 auto;
-        
-        .clearfix();
-    }   
-    
-    &__left {
-        width: 25%;
-        float: left;
+﻿.layout {
+    width: 100%;
+    min-height: 100%;
+    position: relative;
+
+    &__body {
+        display: block;
+        width: 100%;
+        min-height: 100%;
+        position: relative;
+
+        overflow-x: hidden;
     }
-    
-    &__right {
-        width: 75%;
-        float: left;
+
+    &._layout-opened &__body {
+        padding-right: 260px;
+    }
+
+    &__wrapper {
+        margin: 0 auto;
+        width: 90%;
+        max-width: 1200px;
     }
 }

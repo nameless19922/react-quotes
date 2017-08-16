@@ -1,0 +1,90 @@
+.ui-custom-range {
+	padding: 0;
+
+	& {
+		/*removes default webkit styles*/
+		-webkit-appearance: none;
+
+		/*required for proper track sizing in FF*/
+		width: 100%;
+	}
+	&::-webkit-slider-runnable-track {
+		width: 100%;
+		height: 1px;
+		background-color: #d9d9d9;
+		border: none;
+		border-radius: 1px;
+	}
+	&::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		border: none;
+		height: 7px;
+		width: 7px;
+		border-radius: 50%;
+		background-color: #2b2b51;
+		margin-top: -3px;
+	}
+	&:focus {
+		outline: none;
+	}
+	&:focus::-webkit-slider-runnable-track {
+		background: #ccc;
+	}
+
+	&::-moz-range-track {
+		width: 100%;
+		height: 1px;
+		background-color: #d9d9d9;
+		border: none;
+		border-radius: 3px;
+	}
+	&::-moz-range-thumb {
+		border: none;
+		height: 7px;
+		width: 7px;
+		border-radius: 50%;
+		background-color: #2b2b51;
+	}
+
+	/*hide the outline behind the border*/
+	&:-moz-focusring{
+		outline: 1px solid white;
+		outline-offset: -1px;
+	}
+
+	&::-ms-track {
+		width: 100%;
+		height: 1px;
+
+		/*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+		background: transparent;
+
+		/*leave room for the larger thumb to overflow with a transparent border */
+		border-color: transparent;
+		border-width: 6px 0;
+
+		/*remove default tick marks*/
+		color: transparent;
+	}
+	&::-ms-fill-lower {
+		background-color: #d9d9d9;
+		border-radius: 10px;
+	}
+	&::-ms-fill-upper {
+		background-color: #d9d9d9;
+		border-radius: 10px;
+	}
+	&::-ms-thumb {
+		border: none;
+		height: 7px;
+		width: 7px;
+		border-radius: 50%;
+		background-color: #2b2b51;
+	}
+	&:focus::-ms-fill-lower {
+		background-color: #ccc;
+	}
+	&:focus::-ms-fill-upper {
+		background-color: #ccc;
+	}
+}

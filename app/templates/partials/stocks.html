@@ -1,0 +1,52 @@
+<section class="stocks">
+    <div class="layout__wrapper">
+        <div class="stocks__top">
+            <div class="stocks__filter">
+                <div class="stocks__filter-title">Лидеры</div>
+                <div class="stocks__filter-items">
+                    <div class="btn-selector _group">
+                        <label class="btn-selector__label">
+                            <input class="btn-selector__input" type="radio" name="leaders" value="leadersup" checked="">
+                            <span class="btn-selector__text">Роста</span>
+                        </label>
+                        <label class="btn-selector__label">
+                            <input class="btn-selector__input" type="radio" name="leaders" value="leadersdown">
+                            <span class="btn-selector__text">Падения</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stocks__table">
+            <div class="stocks__table-thr">
+                <div class="stocks__table-th _title">Наименование</div>
+                <div class="stocks__table-th _cprice">Цена</div>
+                <div class="stocks__table-th _change">Изменение, %</div>
+                <div class="stocks__table-th _price">Min/max цена, день</div>
+            </div>
+            <div class="stocks__table-tr js-stocks-leaders-item">
+                <div class="stocks__table-td _title">
+                    <div class="stocks__table-leader">
+                        <div class="stocks__table-name">АСКО ао</div>
+                        <div class="stocks__table-date">14.08.2017 15:20</div>
+                    </div>
+                </div>
+                <div class="stocks__table-td _cprice">
+                    <div class="stocks__table-value">6,5000</div>
+                </div>
+                <div class="stocks__table-td _change">
+                    <div class="stocks__table-value">+6,78</div>
+                </div>
+                <div class="stocks__table-td _price">
+                    <div class="stocks__table-box">
+                        <div class="stocks__table-value _range">5,1100</div>
+                        <div class="stocks__table-value _range">6,7395</div>
+                    </div>
+                    <div class="stocks__table-range">
+                        <input disabled="" class="ui-custom-range" type="range" step="0.0001" data-current="" min="5.11" max="6.7395">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
