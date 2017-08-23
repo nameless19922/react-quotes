@@ -118,10 +118,10 @@ gulp.task('watch', () => {
   });
 
   gulp.watch('app/js/**', function () {
-    gulp.start('script');
+    gulp.start('js');
   });
 
-  watch('app/vendor/**', () => {
+  watch('app/vendor:js/**', () => {
     gulp.start('vendor');
   });
 
