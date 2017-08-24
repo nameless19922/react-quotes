@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { QuotesTabsContainer } from '../containers/QuotesTabsContainer'
-import { QuotesTableContainer } from '../containers/QuotesTableContainer'
+import QuotesTabsContainer from '../containers/QuotesTabsContainer'
+import QuotesTableContainer from '../containers/QuotesTableContainer'
 
 export default class App extends Component {
   constructor(props) {

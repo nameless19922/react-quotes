@@ -63,14 +63,15 @@ gulp.task('vendor:js', () => {
 
 gulp.task('js:bundle', () => {
   return gulp.src(['app/js/*.bundle.js'])
-  .pipe(named())
-  .pipe(webpack(webConfig))
-  .pipe(gulp.dest('dist/js'));
+    .pipe(named())
+    .pipe(webpack(webConfig))
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('js', function () {
   gulp.src('app/js/*.js')
-  .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('js:bundle:watch', () => {
@@ -81,7 +82,6 @@ gulp.task('js:bundle:watch', () => {
   return gulp.src([
     'app/js/*.bundle.js'
   ])
-    .pipe(plumber())
     .pipe(named())
     .pipe(webpack(watch))
     .pipe(gulp.dest('dist/js'));

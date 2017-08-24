@@ -41,7 +41,7 @@ export default class QuotesItem extends Component {
             <div className="stocks__table-value _range">{ formatValue(minMax.max, item.scale) }</div>
           </div>
           <div className="stocks__table-range">
-            <input disabled="" className="ui-custom-range" type="range" step="0.0001" min={ minMax.min } max={ minMax.max } value={ item.close } />
+            <input disabled="" className="ui-custom-range" type="range" step="0.0001" min={ minMax.min } max={ minMax.max } defaultValue={ item.close } />
           </div>
         </div>
       </div>

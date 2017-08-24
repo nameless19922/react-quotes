@@ -58,7 +58,7 @@ class QuotesTabs extends Component {
   }
 }
 
-export const QuotesTabsContainer = connect(
+export default connect(
   null,
   dispatch => {
     return {

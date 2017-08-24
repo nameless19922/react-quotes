@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux'
 import QuotesItem from '../components/QuotesItem'
 import Preloader from '../components/Preloader'
@@ -14,8 +15,14 @@ class QuotesTable extends Component {
   }
 
   render() {
+    let result = null;
+
     if (this.props.isRequest) {
-      return <Preloader />;
+      result = <Preloader />;
+    } else {
+      result = this.props.data.map((item, index) => (
+        <QuotesItem key={ index } item={ item } />
+      ));
     }
 
     return (
@@ -26,15 +33,19 @@ class QuotesTable extends Component {
           <div className="stocks__table-th _change">Изменение, %</div>
           <div className="stocks__table-th _price">Min/max цена, день</div>
         </div>
-        { this.props.data.map((item, index) => (
-          <QuotesItem key={ index } item={ item } />
-        )) }
+        <ReactCSSTransitionGroup
+          transitionName="leaders"
+          transitionEnterTimeout={ 300 }
+          transitionLeaveTimeout={ 150 }
+        >
+          { result }
+        </ReactCSSTransitionGroup>
       </div>
     );
   }
 }
 
-export const QuotesTableContainer = connect(
+export default connect(
   state => {
     return {
       data: state.data,

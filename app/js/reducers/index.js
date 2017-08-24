@@ -2,6 +2,7 @@ import { QUOTES_REQUEST, QUOTES_SUCCESS, QUOTES_FAILURE, QUOTES_TYPE } from '../
 import { initialState } from '../store'
 
 export default function quotesReducer(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
     case QUOTES_FAILURE:
       return {
