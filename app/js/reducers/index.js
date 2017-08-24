@@ -1,4 +1,4 @@
-import { QUOTES_REQUEST, QUOTES_SUCCESS, QUOTES_FAILURE } from '../actions'
+import { QUOTES_REQUEST, QUOTES_SUCCESS, QUOTES_FAILURE, QUOTES_TYPE } from '../actions'
 import { initialState } from '../store'
 
 export default function quotesReducer(state = initialState, action) {

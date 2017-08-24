@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import QuotesTabs from '../containers/quotesTabs'
-import { QuotesTableContainer } from '../containers/quotesTableContainer'
+import { QuotesTabsContainer } from '../containers/QuotesTabsContainer'
+import { QuotesTableContainer } from '../containers/QuotesTableContainer'
 
 export default class App extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class App extends Component {
     return (
         <section className="stocks">
           <div className="layout__wrapper">
-            <QuotesTabs />
+            <QuotesTabsContainer />
             <QuotesTableContainer />
           </div>
         </section>

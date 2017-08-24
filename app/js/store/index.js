@@ -5,8 +5,7 @@ import quotesReducer from  '../reducers'
 export const initialState = {
   isRequest: false,
   isFailure: false,
-  data: [],
-  message: ''
+  data: []
 };
 
 export const store = createStore(
