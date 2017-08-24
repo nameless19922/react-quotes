@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux'
 import QuotesItem from '../components/QuotesItem'
 import Preloader from '../components/Preloader'
 import { getLeaders } from '../actions'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class QuotesTable extends Component {
   constructor(props) {
@@ -15,18 +15,21 @@ class QuotesTable extends Component {
   }
 
   render() {
-    let result = null;
+    let result = this.props.data.map((item, index) => (
+      <QuotesItem key={ index } item={ item } />
+    ));
 
-    if (this.props.isRequest) {
-      result = <Preloader />;
-    } else {
-      result = this.props.data.map((item, index) => (
-        <QuotesItem key={ index } item={ item } />
-      ));
-    }
+    const delay = 1000;
 
     return (
       <div className="stocks__table">
+        <ReactCSSTransitionGroup
+          transitionName="fade"
+          transitionEnterTimeout={ delay }
+          transitionLeaveTimeout={ delay }
+        >
+          { this.props.isRequest && <Preloader /> }
+        </ReactCSSTransitionGroup>
         <div className="stocks__table-thr">
           <div className="stocks__table-th _title">Наименование</div>
           <div className="stocks__table-th _cprice">Цена</div>
@@ -34,11 +37,11 @@ class QuotesTable extends Component {
           <div className="stocks__table-th _price">Min/max цена, день</div>
         </div>
         <ReactCSSTransitionGroup
-          transitionName="leaders"
-          transitionEnterTimeout={ 300 }
-          transitionLeaveTimeout={ 150 }
+          transitionName="fade"
+          transitionEnterTimeout={ delay }
+          transitionLeaveTimeout={ delay }
         >
-          { result }
+          { !this.props.isRequest && result }
         </ReactCSSTransitionGroup>
       </div>
     );
