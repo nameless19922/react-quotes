@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
+
 import { connect } from 'react-redux'
 import { getLeaders } from '../actions'
 
-class QuotesTabs extends Component {
+class LeadersTabs extends React.Component {
   constructor(props) {
     super(props);
 
@@ -65,4 +66,4 @@ export default connect(
       getLeaders: type => dispatch(getLeaders(type))
     }
   }
-)(QuotesTabs);
+)(LeadersTabs);

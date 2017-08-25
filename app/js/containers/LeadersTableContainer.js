@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import QuotesItem from '../components/QuotesItem'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
+import QuotesItem from '../components/LeadersItem'
 import Preloader from '../components/Preloader'
 import { getLeaders } from '../actions'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-class QuotesTable extends Component {
+class LeadersTable extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -19,7 +20,7 @@ class QuotesTable extends Component {
       <QuotesItem key={ index } item={ item } />
     ));
 
-    const delay = 1000;
+    const delay = 200;
 
     return (
       <div className="stocks__table">
@@ -36,13 +37,7 @@ class QuotesTable extends Component {
           <div className="stocks__table-th _change">Изменение, %</div>
           <div className="stocks__table-th _price">Min/max цена, день</div>
         </div>
-        <ReactCSSTransitionGroup
-          transitionName="fade"
-          transitionEnterTimeout={ delay }
-          transitionLeaveTimeout={ delay }
-        >
-          { !this.props.isRequest && result }
-        </ReactCSSTransitionGroup>
+        { result }
       </div>
     );
   }
@@ -61,4 +56,4 @@ export default connect(
       getLeaders: type => dispatch(getLeaders(type))
     }
   }
-)(QuotesTable);
+)(LeadersTable);
