@@ -9,18 +9,22 @@ import { getLeaders } from '../actions'
 class LeadersTable extends React.Component {
   constructor(props) {
     super(props);
+
+    console.log(this.props);
   }
 
   componentDidMount() {
     this.props.getLeaders('up');
+
+    console.log(this.props);
   }
 
   render() {
+    const delay = 200;
+
     let result = this.props.data.map((item, index) => (
       <QuotesItem key={ index } item={ item } />
     ));
-
-    const delay = 200;
 
     return (
       <div className="stocks__table">
@@ -44,11 +48,13 @@ class LeadersTable extends React.Component {
 }
 
 export default connect(
-  state => {
+  (state, ownProps) => {
+    console.log(ownProps);
+
     return {
-      data: state.data,
-      isRequest: state.isRequest,
-      isFailure: state.isFailure
+      data: state.quotes.data,
+      isRequest: state.quotes.isRequest,
+      isFailure: state.quotes.isFailure
     }
   },
   dispatch => {

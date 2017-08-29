@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import { formatValue, formatDate } from '../utils'
 import { getHistory } from '../actions'
@@ -26,7 +25,6 @@ export default class QuotesItem extends React.Component {
       <div className="stocks__table-tr">
         <div className="stocks__table-td _title">
           <div className="stocks__table-leader">
-            <Link to='/item'>item</Link>
             <div className="stocks__table-name">{ item.name }</div>
             <div className="stocks__table-date">{ formatDate(item.t) }</div>
           </div>

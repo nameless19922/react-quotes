@@ -100,8 +100,9 @@ gulp.task('serve', () => {
   gulp.src('dist')
     .pipe(server({
       livereload: true,
-      directoryListing: true,
-      open: 'index.html'
+      defaultFile: 'index.html',
+      fallback: 'index.html',
+      log: 'debug'
     }));
     
   gulp.start('watch');

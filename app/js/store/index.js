@@ -1,15 +1,25 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
+import createHistory from 'history/createBrowserHistory'
+import { routerReducer, routerMiddleware } from 'react-router-redux'
+
 import quotesReducer from  '../reducers'
 
+export const history = createHistory();
+
 export const initialState = {
-  isRequest: false,
-  isFailure: false,
-  data: []
+  quotes: {
+    isRequest: false,
+    isFailure: false,
+    data: []
+  }
 };
 
 export const store = createStore(
-  quotesReducer,
+  combineReducers({
+    routing: routerReducer,
+    quotes: quotesReducer
+  }),
   initialState,
-  applyMiddleware(thunkMiddleware)
+  applyMiddleware(thunkMiddleware, routerMiddleware(history))
 );
