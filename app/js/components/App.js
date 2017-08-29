@@ -13,7 +13,7 @@ export default class App extends React.Component {
       <ConnectedRouter history={ history }>
         <Switch>
           <Route path="/leaders/:to?" exact component={ Leaders } />
-          <Route path="/item" component={ Quote } />
+          <Route path="/quote/:classcode/:securcode" component={ Quote } />
           <Route component={ NotFound } />
         </Switch>
       </ConnectedRouter>

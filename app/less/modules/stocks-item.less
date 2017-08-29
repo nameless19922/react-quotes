@@ -1,0 +1,131 @@
+.stocks-item {
+    padding: 60px 0;
+
+    &__box {
+        padding: 30px 25px;
+
+        &-left {
+            text-align: left;
+
+            @media (max-width: 767px) {
+                float: none;
+            }
+        }
+
+        &-title {
+            color: #2d2d2d;
+            font-size: 18px;
+            font-weight: 500;
+            text-transform: uppercase;
+
+            @media (max-width: 767px) {
+                font-size: 14px;
+                text-align: center;
+            }
+        }
+
+        &-desc {
+            color: #96979a;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+
+            @media (max-width: 767px) {
+                font-size: 10px;
+                text-align: center;
+            }
+        }
+
+        &-value {
+            margin-top: 10px;
+
+            color: #2d2d2d;
+            font-size: 28px;
+            font-weight: 500;
+
+            @media (max-width: 767px) {
+                font-size: 18px;
+                text-align: center;
+            }
+
+            span {
+                &:first-child {
+                    margin-right: 20px;
+
+                    @media (max-width: 767px) {
+                        margin-right: 10px;
+                    }
+                }
+
+                &:last-child {
+                    font-size: 16px;
+
+                    &._red {
+                        color: #ff1b41;
+                    }
+
+                    &._green {
+                        color: #4fd669;
+                    }
+
+                    @media (max-width: 767px) {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        &-period {
+            margin-top: 5px;
+
+            .clearfix();
+
+            @media (max-width: 767px) {
+                text-align: center;
+            }
+        }
+
+        &-filter {
+            display: inline-block;
+            padding: 0 0 3px;
+
+            border: none;
+            border-bottom: 1px solid transparent;
+            background: none;
+
+            font-size: 12px;
+            font-weight: 500;
+            color: #888;
+
+            &:not(:first-child) {
+                margin-left: 40px;
+
+                @media (max-width: 767px) {
+                    margin-left: 15px;
+                }
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &._current {
+                color: @c-blue-dark;
+                border-color: @c-blue-accent;
+            }
+        }
+
+        &-chart {
+            height: 400px;
+            position: relative;
+
+            @media (max-width: 1023px) {
+                height: 300px;
+            }
+
+            @media (max-width: 767px) {
+                height: 200px;
+            }
+        }
+    }
+}

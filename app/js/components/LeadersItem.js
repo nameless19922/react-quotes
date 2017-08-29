@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { formatValue, formatDate } from '../utils'
-import { getHistory } from '../actions'
+import { getHistory } from '../actions/leaders'
 
 export default class QuotesItem extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ export default class QuotesItem extends React.Component {
     const minMax = this.minMax();
 
     return (
-      <Link to="/item" className="stocks__table-tr">
+      <Link to={ `/quote/${item.class.toLowerCase()}/${item.secur.toLowerCase()}` } className="stocks__table-tr">
         <div className="stocks__table-td _title">
           <div className="stocks__table-leader">
             <div className="stocks__table-name">{ item.name }</div>

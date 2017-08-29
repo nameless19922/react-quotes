@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import LeadersTabs from './LeadersTabs'
 import LeadersTableContainer from '../containers/LeadersTableContainer'
 

@@ -1,27 +1,26 @@
 import { getDateAgo } from '../utils'
 
-export const QUOTES_REQUEST = 'QUOTES_REQUEST';
-export const QUOTES_SUCCESS = 'QUOTES_SUCCESS';
-export const QUOTES_FAILURE = 'QUOTES_FAILURE';
-export const QUOTES_TYPE    = 'QUOTES_TYPE';
+export const LEADERS_REQUEST = 'LEADERS_REQUEST';
+export const LEADERS_SUCCESS = 'LEADERS_SUCCESS';
+export const LEADERS_FAILURE = 'LEADERS_FAILURE';
 
-export function quotesFailure(isFailure) {
+export function leadersFailure(isFailure) {
   return {
-    type: QUOTES_FAILURE,
+    type: LEADERS_FAILURE,
     isFailure
   }
 }
 
-export function quotesSuccess(data) {
+export function leadersSuccess(data) {
   return {
-    type: QUOTES_SUCCESS,
+    type: LEADERS_SUCCESS,
     data
   }
 }
 
-export function quotestRequest(isRequest) {
+export function leadersRequest(isRequest) {
   return {
-    type: QUOTES_REQUEST,
+    type: LEADERS_REQUEST,
     isRequest
   }
 }
@@ -30,7 +29,7 @@ export function getLeaders(type, number = 5) {
   return dispatch => {
     let data = [];
 
-    dispatch(quotestRequest(true));
+    dispatch(leadersRequest(true));
 
     axios.get(`https://api.bcs.ru/quotesgroups/v1?list_filter=leaders${type}&list_limit=${number}&mode=real`).then(response => {
       let date     = new Date(),
@@ -60,11 +59,11 @@ export function getLeaders(type, number = 5) {
         return item;
       });
 
-      dispatch(quotesSuccess(data));
-      dispatch(quotestRequest(false));
+      dispatch(leadersSuccess(data));
+      dispatch(leadersRequest(false));
     })).catch(response => {
-      dispatch(quotesFailure(true, response.body));
-      dispatch(quotestRequest(false));
+      dispatch(leadersFailure(true, response.body));
+      dispatch(leadersRequest(false));
       console.error(response);
     });
   };

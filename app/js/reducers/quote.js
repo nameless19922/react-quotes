@@ -1,21 +1,21 @@
-import { QUOTES_REQUEST, QUOTES_SUCCESS, QUOTES_FAILURE, QUOTES_TYPE } from '../actions'
+import { QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE } from '../actions/quote'
 import { initialState } from '../store'
 
-export default function quotesReducer(state = initialState, action) {
+export default function quoteReducer(state = initialState, action) {
   switch (action.type) {
-    case QUOTES_FAILURE:
+    case QUOTE_FAILURE:
       return {
         ...state,
         isFailure: action.isFailure
       };
 
-    case QUOTES_REQUEST:
+    case QUOTE_REQUEST:
       return {
         ...state,
         isRequest: action.isRequest
       };
 
-    case QUOTES_SUCCESS:
+    case QUOTE_SUCCESS:
       return {
         ...state,
         data: action.data

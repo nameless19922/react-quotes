@@ -5,7 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import QuotesItem from '../components/LeadersItem'
 import Preloader from '../components/Preloader'
-import { getLeaders } from '../actions'
+import { getLeaders } from '../actions/leaders'
 
 class LeadersTable extends React.Component {
   constructor(props) {
@@ -55,9 +55,9 @@ export default withRouter(connect(
     const params = ownProps.match.params;
 
     return {
-      data: state.quotes.data,
-      isRequest: state.quotes.isRequest,
-      isFailure: state.quotes.isFailure,
+      data: state.leaders.data,
+      isRequest: state.leaders.isRequest,
+      isFailure: state.leaders.isFailure,
       type: typeof params.to !== 'undefined' ? params.to : 'up'
     }
   },
