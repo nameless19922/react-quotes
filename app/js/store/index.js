@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createHashHistory'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 
 import quotesReducer from  '../reducers'

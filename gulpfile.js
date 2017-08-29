@@ -99,11 +99,14 @@ gulp.task('fonts', () => {
 gulp.task('serve', () => {
   gulp.src('dist')
     .pipe(server({
-      livereload: true,
-      defaultFile: 'index.html',
-      fallback: 'index.html',
-      log: 'debug'
-    }));
+      livereload:       true,
+      open:             true,
+      log:              'debug',
+      clientConsole:    true,
+      defaultFile:      'index.html',
+      fallback:  'index.html'
+
+}));
     
   gulp.start('watch');
 });

@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
@@ -9,15 +10,17 @@ import { getLeaders } from '../actions'
 class LeadersTable extends React.Component {
   constructor(props) {
     super(props);
-
-    console.log(this.props);
   }
 
   componentDidMount() {
-    this.props.getLeaders('up');
-
-    console.log(this.props);
+    this.props.getLeaders(this.props.type);
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.type !== this.props.type) {
+      this.props.getLeaders(nextProps.type);
+    }
+}
 
   render() {
     const delay = 200;
@@ -47,14 +50,15 @@ class LeadersTable extends React.Component {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   (state, ownProps) => {
-    console.log(ownProps);
+    const params = ownProps.match.params;
 
     return {
       data: state.quotes.data,
       isRequest: state.quotes.isRequest,
-      isFailure: state.quotes.isFailure
+      isFailure: state.quotes.isFailure,
+      type: typeof params.to !== 'undefined' ? params.to : 'up'
     }
   },
   dispatch => {
@@ -62,4 +66,4 @@ export default connect(
       getLeaders: type => dispatch(getLeaders(type))
     }
   }
-)(LeadersTable);
+)(LeadersTable));

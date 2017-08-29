@@ -12,10 +12,9 @@ export default class App extends React.Component {
     return (
       <ConnectedRouter history={ history }>
         <Switch>
-          <Route path="/" exact component={ Leaders } />
-          <Route path="/leaders/:to" component={ Leaders } />
+          <Route path="/leaders/:to?" exact component={ Leaders } />
           <Route path="/item" component={ Quote } />
-          <Route path="*" component={ NotFound } />
+          <Route component={ NotFound } />
         </Switch>
       </ConnectedRouter>
     );

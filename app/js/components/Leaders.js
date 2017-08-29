@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import LeadersTabsContainer from '../containers/LeadersTabsContainer'
+import LeadersTabs from './LeadersTabs'
 import LeadersTableContainer from '../containers/LeadersTableContainer'
 
 export default class Leaders extends Component {
@@ -11,7 +11,7 @@ export default class Leaders extends Component {
     return (
         <section className="stocks">
           <div className="layout__wrapper">
-            <LeadersTabsContainer />
+            <LeadersTabs />
             <LeadersTableContainer />
           </div>
         </section>
