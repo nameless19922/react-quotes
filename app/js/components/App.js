@@ -1,11 +1,11 @@
-import React from 'react'
-import { ConnectedRouter } from 'react-router-redux'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import React from 'react';
+import { ConnectedRouter } from 'react-router-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
-import Quote from './Quote'
-import Leaders from './Leaders'
-import NotFound from './NotFound'
-import { history } from '../store'
+import Quote from './Quote';
+import Leaders from './Leaders';
+import NotFound from './NotFound';
+import { history } from '../store';
 
 export default class App extends React.Component {
   render() {

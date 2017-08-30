@@ -1,12 +1,12 @@
-import React from 'react'
-import { withRouter, NavLink } from 'react-router-dom'
-import { connect } from 'react-redux'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import React from 'react';
+import { withRouter, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import { formatValue } from '../utils'
-import Preloader from '../components/Preloader'
-import Chart from '../components/Chart'
-import { getQuote } from '../actions/quote'
+import { formatValue } from '../utils';
+import Preloader from '../components/Preloader';
+import Chart from '../components/Chart';
+import { getQuote } from '../actions/quote';
 
 let current = {
   scale: null,

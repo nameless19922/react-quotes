@@ -65,6 +65,7 @@ gulp.task('js:bundle', () => {
   return gulp.src(['app/js/*.bundle.js'])
     .pipe(named())
     .pipe(webpack(webConfig))
+    .pipe(uglify())
     .pipe(gulp.dest('dist/js'));
 });
 
@@ -83,6 +84,7 @@ gulp.task('js:bundle:watch', () => {
   ])
     .pipe(named())
     .pipe(webpack(watch))
+    .pipe(uglify())
     .pipe(gulp.dest('dist/js'));
 });
 
@@ -99,12 +101,12 @@ gulp.task('fonts', () => {
 gulp.task('serve', () => {
   gulp.src('dist')
     .pipe(server({
-      livereload:       true,
-      open:             true,
-      log:              'debug',
-      clientConsole:    true,
-      defaultFile:      'index.html',
-      fallback:  'index.html'
+      livereload:    true,
+      open:          true,
+      log:           'debug',
+      clientConsole: true,
+      defaultFile:   'index.html',
+      fallback:      'index.html'
 
 }));
     

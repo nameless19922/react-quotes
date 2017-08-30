@@ -1,12 +1,12 @@
-import React from 'react'
-import { withRouter, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import React from 'react';
+import { withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import QuotesItem from '../components/LeadersItem'
-import Preloader from '../components/Preloader'
-import { getLeaders } from '../actions/leaders'
-import { history } from '../store'
+import QuotesItem from '../components/LeadersItem';
+import Preloader from '../components/Preloader';
+import { getLeaders } from '../actions/leaders';
+import { history } from '../store';
 
 class LeadersTable extends React.Component {
   constructor(props) {

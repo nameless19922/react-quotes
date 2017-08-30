@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import { formatValue, formatDate } from '../utils'
-import { getHistory } from '../actions/leaders'
+import { formatValue, formatDate } from '../utils';
+import { getHistory } from '../actions/leaders';
 
 export default class QuotesItem extends React.Component {
   constructor(props) {

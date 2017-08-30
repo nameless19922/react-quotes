@@ -1,10 +1,10 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createHistory from 'history/createHashHistory'
-import { routerReducer, routerMiddleware } from 'react-router-redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import createHistory from 'history/createHashHistory';
+import { routerReducer, routerMiddleware } from 'react-router-redux';
 
-import leadersReducer from  '../reducers/leaders'
-import quoteReducer from  '../reducers/quote'
+import leadersReducer from  '../reducers/leaders';
+import quoteReducer from  '../reducers/quote';
 
 export const history = createHistory();
 

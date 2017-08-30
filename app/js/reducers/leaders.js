@@ -1,5 +1,5 @@
-import { LEADERS_REQUEST, LEADERS_SUCCESS, LEADERS_FAILURE } from '../actions/leaders'
-import { initialState } from '../store'
+import { LEADERS_REQUEST, LEADERS_SUCCESS, LEADERS_FAILURE } from '../actions/leaders';
+import { initialState } from '../store';
 
 export default function leadersReducer(state = initialState, action) {
   switch (action.type) {

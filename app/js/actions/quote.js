@@ -1,4 +1,4 @@
-import { getPeriod } from '../utils'
+import { getPeriod } from '../utils';
 
 export const QUOTE_REQUEST = 'QUOTE_REQUEST';
 export const QUOTE_SUCCESS = 'QUOTE_SUCCESS';

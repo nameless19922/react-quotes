@@ -1,5 +1,5 @@
-import { QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE } from '../actions/quote'
-import { initialState } from '../store'
+import { QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE } from '../actions/quote';
+import { initialState } from '../store';
 
 export default function quoteReducer(state = initialState, action) {
   switch (action.type) {

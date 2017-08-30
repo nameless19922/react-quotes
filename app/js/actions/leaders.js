@@ -1,4 +1,4 @@
-import { getDateAgo } from '../utils'
+import { getDateAgo } from '../utils';
 
 export const LEADERS_REQUEST = 'LEADERS_REQUEST';
 export const LEADERS_SUCCESS = 'LEADERS_SUCCESS';

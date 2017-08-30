@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import QuoteContainer from '../containers/QuoteContainer'
+import QuoteContainer from '../containers/QuoteContainer';
 
 export default class Quote extends React.Component {
   render() {
