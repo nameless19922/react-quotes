@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
@@ -121,6 +121,10 @@ class Quote extends React.Component {
   render() {
     const { data, isRequest } = this.props;
     const delay = 200;
+
+    if (!Object.keys(data).length) {
+      return <Redirect to="/leaders/up" />
+    }
 
     const result = (
       <div className="stocks-item__box-left">

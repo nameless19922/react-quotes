@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
@@ -24,6 +24,11 @@ class LeadersTable extends React.Component {
 
   render() {
     const delay = 200;
+    const type = this.props.type;
+
+    if (type !== 'up' && type !== 'down') {
+      return <Redirect to="/leaders/up" />
+    }
 
     let result = this.props.data.map((item, index) => (
       <QuotesItem key={ index } item={ item } />

@@ -10,6 +10,8 @@ export default class Chart extends React.Component {
       this.props.container,
       this.props.options
     );
+
+    this.chart.addSeries(this.props.data);
   }
 
   render() {
