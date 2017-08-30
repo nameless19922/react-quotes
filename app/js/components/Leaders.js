@@ -10,12 +10,12 @@ export default class Leaders extends Component {
 
   render() {
     return (
-        <section className="stocks">
-          <div className="layout__wrapper">
-            <LeadersTabs />
-            <LeadersTableContainer />
-          </div>
-        </section>
+      <section className="stocks">
+        <div className="layout__wrapper">
+          <LeadersTabs />
+          <LeadersTableContainer />
+        </div>
+      </section>
     );
   }
 }

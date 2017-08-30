@@ -10,11 +10,13 @@ export default class Chart extends React.Component {
       this.props.container,
       this.props.options
     );
-
-    this.chart.addSeries(this.props.data);
   }
 
   render() {
-    return <div id={ this.props.container }></div>
+    return (
+      <div className="stocks-item__box-chart">
+        <div id={ this.props.container }></div>
+      </div>
+    );
   }
 }

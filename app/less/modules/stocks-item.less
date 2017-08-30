@@ -1,8 +1,19 @@
 .stocks-item {
     padding: 60px 0;
 
+    &__leaders {
+        margin-bottom: 50px;
+
+        &-link {
+            color: @c-blue-accent;
+            font-size: 16px;
+            text-decoration: none;
+        }
+    }
+
     &__box {
-        padding: 30px 25px;
+        min-height: 575px;
+        position: relative;
 
         &-left {
             text-align: left;
@@ -96,6 +107,7 @@
             cursor: pointer;
             font-size: 12px;
             font-weight: 500;
+            text-decoration: none;
 
             &:not(:first-child) {
                 margin-left: 40px;

@@ -6,29 +6,33 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import QuotesItem from '../components/LeadersItem'
 import Preloader from '../components/Preloader'
 import { getLeaders } from '../actions/leaders'
+import { history } from '../store'
 
 class LeadersTable extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  checkType(type) {
+    if (type === 'up' || type === 'down') {
+      this.props.getLeaders(type);
+    } else {
+      history.push('/leaders/up');
+    }
+  }
+
   componentDidMount() {
-    this.props.getLeaders(this.props.type);
+    this.checkType(this.props.type);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.type !== this.props.type) {
-      this.props.getLeaders(nextProps.type);
+      this.checkType(nextProps.type);
     }
-}
+  }
 
   render() {
     const delay = 200;
-    const type = this.props.type;
-
-    if (type !== 'up' && type !== 'down') {
-      return <Redirect to="/leaders/up" />
-    }
 
     let result = this.props.data.map((item, index) => (
       <QuotesItem key={ index } item={ item } />

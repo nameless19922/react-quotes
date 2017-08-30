@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
@@ -7,6 +7,11 @@ import { formatValue } from '../utils'
 import Preloader from '../components/Preloader'
 import Chart from '../components/Chart'
 import { getQuote } from '../actions/quote'
+
+let current = {
+  scale: null,
+  period: null
+};
 
 const chartOptions = {
   chart: {
@@ -37,7 +42,18 @@ const chartOptions = {
     minorGridLineWidth: 0,
     labels: {
       formatter: function () {
+        let date = new Date(this.value),
+            period = current.period;
 
+        if (period === '1d') {
+          let h = (date.getUTCHours() < 10) ? '0' + date.getUTCHours() : date.getUTCHours(),
+              m = (date.getUTCMinutes() < 10) ? '0' + date.getUTCMinutes() : date.getUTCMinutes();
+          return h + ':' + m;
+        } else if (period === '1m' || period === '3m') {
+          return date.getUTCDate() + ' ' + date.toLocaleDateString('ru-RU', {month: 'short'});
+        } else if (period === '1y' || period === '5y' || period === 'max') {
+          return date.toLocaleDateString('ru-RU', { month: 'short', year: 'numeric' });
+        }
       },
       align: 'center',
       y: -20,
@@ -102,13 +118,21 @@ const chartOptions = {
     headerFormat: null,
     useHtml: true,
     pointFormatter: function () {
+      let dataHTML = '',
+          dataDate = new Date(this.x),
 
+        fix = function (number) {
+          return (number < 10) ? '0' + number : number;
+        };
+
+      dataHTML +=
+        '<div>' + fix(dataDate.getUTCDate()) + '.' + fix(dataDate.getUTCMonth() + 1) + '.' + dataDate.getUTCFullYear() +
+        ', ' + fix(dataDate.getUTCHours()) + ':' + fix(dataDate.getUTCMinutes()) + '</div><br>' +
+        '<div style="font-weight:600">' + formatValue(this.y, current.scale) + '</div>';
+
+      return dataHTML;
     }
-  },
-  series: [{
-    type: 'area',
-    color: '#4fd669'
-  }]
+  }
 };
 
 class Quote extends React.Component {
@@ -118,29 +142,53 @@ class Quote extends React.Component {
     getQuote(classCode, securCode, period);
   }
 
-  render() {
-    const { data, isRequest } = this.props;
-    const delay = 200;
+  componentWillReceiveProps(nextProps) {
+    const { classCode, securCode, period, getQuote } = this.props;
 
-    if (!Object.keys(data).length) {
-      return <Redirect to="/leaders/up" />
+    if (nextProps.period !== period) {
+      getQuote(classCode, securCode, nextProps.period);
+    }
+  }
+
+  render() {
+    const { data, isRequest, period } = this.props;
+    const delay = 200;
+    const url = `/quote/${this.props.classCode}/${this.props.securCode}`;
+    const links = [
+      { param: '1d',  name: '1д' },
+      { param: '1m',  name: '1м' },
+      { param: '3m',  name: '3м' },
+      { param: '1y',  name: '1г' },
+      { param: '5y',  name: '5л' },
+      { param: 'max', name: 'max' }
+    ];
+
+    if (Object.keys(data).length) {
+      chartOptions.series = [{
+        type: 'area',
+        color: '#4fd669',
+        data: data.chart
+      }];
+
+      current.scale = data.scale;
+      current.period = period;
     }
 
     const result = (
       <div className="stocks-item__box-left">
         <div className="stocks-item__box-title">{ data.name }</div>
         <div className="stocks-item__box-value">
-          <span>{ formatValue(data.close, data.scale) }</span><span className={ (data.profit > 0 ? '_green' : '_red') }>{ formatValue(data.change, data.scale) }{ data.profit > 0 ? '+' : '' } ({ formatValue(data.profit * 100, 2) })</span>
+          <span>{ formatValue(data.close, data.scale) }</span>
+          <span className={ (data.profit > 0 ? '_green' : '_red') }>
+            { formatValue(data.change, data.scale) } ({ data.profit > 0 ? '+' : '' }{ formatValue(data.profit * 100, 2) + '%' })
+          </span>
         </div>
         <div className="stocks-item__box-period">
-          <button className="stocks-item__box-filter" type="button">1д</button>
-          <button className="stocks-item__box-filter" type="button">1м</button>
-          <button className="stocks-item__box-filter" type="button">3м</button>
-          <button className="stocks-item__box-filter" type="button">1г</button>
-          <button className="stocks-item__box-filter" type="button">5л</button>
-          <button className="stocks-item__box-filter" type="button">max</button>
+          { links.map((item, index) => (
+            <NavLink to={ url + '/' +  item.param } className="stocks-item__box-filter" activeClassName="_current" key={ index }>{ item.name }</NavLink>
+          )) }
         </div>
-        <Chart container="stocks-chart" options={ chartOptions } data={ data.chart } />
+
       </div>
     );
 
@@ -151,8 +199,10 @@ class Quote extends React.Component {
           transitionEnterTimeout={ delay }
           transitionLeaveTimeout={ delay }
         >
-          { isRequest ? <Preloader /> : result }
+          { isRequest &&  <Preloader /> }
         </ReactCSSTransitionGroup>
+        {  result }
+        { !isRequest && <Chart container="stocks-chart" options={ chartOptions } /> }
       </div>
     );
   }
@@ -161,12 +211,14 @@ class Quote extends React.Component {
 export default withRouter(connect(
   (state, ownProps) => {
     const params = ownProps.match.params;
+
     return {
       data: state.quote.data,
       isRequest: state.quote.isRequest,
       isFailure: state.quote.isFailure,
       classCode: params.classcode,
-      securCode: params.securcode
+      securCode: params.securcode,
+      period: params.period
     }
   },
   dispatch => {
