@@ -180,7 +180,7 @@ class Quote extends React.Component {
         <div className="stocks-item__box-value">
           <span>{ formatValue(data.close, data.scale) }</span>
           <span className={ (data.profit > 0 ? '_green' : '_red') }>
-            { formatValue(data.change, data.scale) } ({ data.profit > 0 ? '+' : '' }{ formatValue(data.profit * 100, 2) + '%' })
+            { formatValue(data.change, data.scale) } ({ data.profit > 0 ? '+' : '' }{ data.profit ? formatValue(data.profit * 100, 2) : '' + '%' })
           </span>
         </div>
         <div className="stocks-item__box-period">
