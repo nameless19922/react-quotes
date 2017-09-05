@@ -24,18 +24,18 @@ export default class QuotesItem extends React.Component {
 
     return (
       <Link to={ `/quote/${item.class.toLowerCase()}/${item.secur.toLowerCase()}/1y` } className="stocks__table-tr">
-        <div className="stocks__table-td _title">
+        <div className="stocks__table-td _name">
           <div className="stocks__table-leader">
             <div className="stocks__table-name">{ item.name }</div>
             <div className="stocks__table-date">{ formatDate(item.t) }</div>
           </div>
         </div>
-        <div className="stocks__table-td _cprice">
+        <div className="stocks__table-td _close">
           <div className="stocks__table-value">
             { formatValue(item.close, item.scale) }
           </div>
         </div>
-        <div className="stocks__table-td _change">
+        <div className="stocks__table-td _profit">
           <div className={ 'stocks__table-value ' + (item.profit > 0 ? '_green' : '_red') }>
             { item.profit > 0 ? '+' : '' }{ formatValue(item.profit * 100, 2) }
           </div>

@@ -1,8 +1,10 @@
 import { getDateAgo } from '../utils';
+import { initialState } from '../store';
 
 export const LEADERS_REQUEST = 'LEADERS_REQUEST';
 export const LEADERS_SUCCESS = 'LEADERS_SUCCESS';
 export const LEADERS_FAILURE = 'LEADERS_FAILURE';
+export const LEADERS_SORT    = 'LEADERS_SORT';
 
 export function leadersFailure(isFailure) {
   return {
@@ -22,6 +24,14 @@ export function leadersRequest(isRequest) {
   return {
     type: LEADERS_REQUEST,
     isRequest
+  }
+}
+
+export function leadersSort(prop, direction) {
+  return {
+    type: LEADERS_SORT,
+    prop,
+    direction
   }
 }
 
@@ -59,7 +69,10 @@ export function getLeaders(type, number = 5) {
         return item;
       });
 
+      const initalSort = initialState.leaders.sort
+
       dispatch(leadersSuccess(data));
+      dispatch(leadersSort(initalSort.prop, type === 'up' ? 'down' : 'up'));
       dispatch(leadersRequest(false));
     })).catch(response => {
       dispatch(leadersFailure(true, response.body));

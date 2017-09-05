@@ -1,12 +1,13 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import { formatValue } from '../utils';
 import Preloader from '../components/Preloader';
 import Chart from '../components/Chart';
+import { formatValue } from '../utils';
 import { getQuote } from '../actions/quote';
+import { history } from '../store';
 
 let current = {
   scale: null,
@@ -135,6 +136,15 @@ const chartOptions = {
   }
 };
 
+const links = [
+  { param: '1d',  name: '1д' },
+  { param: '1m',  name: '1м' },
+  { param: '3m',  name: '3м' },
+  { param: '1y',  name: '1г' },
+  { param: '5y',  name: '5л' },
+  { param: 'max', name: 'max' }
+];
+
 class Quote extends React.Component {
   componentDidMount() {
     const { classCode, securCode, period, getQuote } = this.props;
@@ -154,14 +164,6 @@ class Quote extends React.Component {
     const { data, isRequest, period } = this.props;
     const delay = 200;
     const url = `/quote/${this.props.classCode}/${this.props.securCode}`;
-    const links = [
-      { param: '1d',  name: '1д' },
-      { param: '1m',  name: '1м' },
-      { param: '3m',  name: '3м' },
-      { param: '1y',  name: '1г' },
-      { param: '5y',  name: '5л' },
-      { param: 'max', name: 'max' }
-    ];
 
     if (Object.keys(data).length) {
       chartOptions.series = [{
@@ -223,7 +225,13 @@ export default withRouter(connect(
   },
   dispatch => {
     return {
-      getQuote: (securCode, classCode, period) => dispatch(getQuote(securCode, classCode, period))
+      getQuote(securCode, classCode, period) {
+        if (links.find(item => item.param === period)) {
+          dispatch(getQuote(securCode, classCode, period));
+        } else {
+          history.push(`/quote/${classCode}/${securCode}/1y`);
+        }
+      }
     }
   }
 )(Quote));

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import LeadersTabs from './LeadersTabs';
 import LeadersTableContainer from '../containers/LeadersTableContainer';
 
-export default class Leaders extends Component {
+export default class Leaders extends React.Component {
   constructor(props) {
     super(props);
   }

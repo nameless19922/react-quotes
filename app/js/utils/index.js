@@ -81,3 +81,41 @@ export function getPeriod(period) {
     resolution
   }
 }
+
+export const sort = {
+  string: {
+    up(first, second) {
+      if (first < second) {
+        return -1
+      }
+
+      if (first > second) {
+        return 1
+      }
+
+      return 0;
+    },
+
+    down(first, second) {
+      if (first > second) {
+        return -1
+      }
+
+      if (first < second) {
+        return 1
+      }
+
+      return 0;
+    }
+  },
+
+  number: {
+    up(first, second) {
+      return first - second;
+    },
+
+    down(first, second) {
+      return second - first;
+    }
+  }
+}

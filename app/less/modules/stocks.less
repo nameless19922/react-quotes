@@ -179,7 +179,7 @@
                 }
             }
 
-            &._cprice {
+            &._close {
                 @media (max-width: 479px) {
                     display: none;
                 }
@@ -188,6 +188,31 @@
             svg {
                 display: block;
                 margin: 0 auto;
+            }
+        }
+
+        &-th a {
+            position: relative;
+            padding-right: 20px;
+
+            color: @c-text-second;
+            text-decoration: none;
+
+            &::after {
+                position: absolute;
+                top: -7px;
+                right: 0;
+
+                font-family: 'icomoon' !important;
+                font-size: 12px;
+            }
+
+            &._up::after {
+                content: @icon-arrow-key-bottom;
+            }
+
+            &._down::after {
+                content: @icon-arrow-key-top;
             }
         }
 
@@ -310,7 +335,6 @@
     }
 
     &__tabs {
-
         &-item {
             display: none;
         }

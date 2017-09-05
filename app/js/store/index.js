@@ -12,7 +12,11 @@ export const initialState = {
   leaders: {
     isRequest: false,
     isFailure: false,
-    data: []
+    data: [],
+    sort: {
+      prop: 'profit',
+      direction: 'down'
+    }
   },
   quote: {
     isRequest: false,
