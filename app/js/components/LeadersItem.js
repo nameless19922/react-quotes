@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { formatValue, formatDate } from '../utils';
 import { getHistory } from '../actions/leaders';
+import MiniChart from './MiniChart';
 
 export default class QuotesItem extends React.Component {
   constructor(props) {
@@ -52,6 +53,9 @@ export default class QuotesItem extends React.Component {
           <div className="stocks__table-range">
             <input readOnly="" className="ui-custom-range" type="range" step="0.0001" min={ minMax.min } max={ minMax.max } value={ item.close } />
           </div>
+        </div>
+        <div className="stocks__table-td _chart">
+          <MiniChart color={ item.profit > 0 ? '#5cd273' : '#ff6465' } data={ item.history } minMax={ minMax } container={ 'mini-chart-' + item.secur } />
         </div>
       </Link>
     )

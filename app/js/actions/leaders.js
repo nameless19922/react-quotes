@@ -49,6 +49,10 @@ export function getLeaders(type, number = 5) {
 
       data = response.data.d[0].v;
 
+      if (!data.length) {
+        throw { body: 'No data' };
+      }
+
       let promises = [...Array(number).keys()].map((item, i) => axios.get(`https://api.bcs.ru/udfdatafeed/v1/history?symbol=${data[i].secur}&resolution=60&from=${(dateFrom / 1000).toFixed(0)}&to=${(dateTo / 1000).toFixed(0)}`));
 
       return axios.all(promises);

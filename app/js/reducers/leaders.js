@@ -1,6 +1,6 @@
 import { LEADERS_REQUEST, LEADERS_SUCCESS, LEADERS_FAILURE, LEADERS_SORT } from '../actions/leaders';
 import { initialState } from '../store';
-import { sort } from '../utils';
+import { sort, typeObj } from '../utils';
 
 export default function leadersReducer(state = initialState, action) {
   switch (action.type) {
@@ -23,7 +23,7 @@ export default function leadersReducer(state = initialState, action) {
       };
 
     case LEADERS_SORT: {
-      const type = typeof state.data[0][action.prop];
+      const type = typeObj(state.data[0][action.prop]);
 
       return {
         ...state,
@@ -32,17 +32,10 @@ export default function leadersReducer(state = initialState, action) {
           direction: action.direction
         },
         data: state.data.sort((first, second) => {
-          if (type === 'string') {
-            return sort.string[action.direction](
-              first[action.prop].toLowerCase(),
-              second[action.prop].toLowerCase()
-            );
-          } else if (type === 'number') {
-            return sort.number[action.direction](
-              first[action.prop],
-              second[action.prop]
-            );
-          }
+          return sort[type][action.direction](
+            first[action.prop],
+            second[action.prop]
+          );
         }).slice()
       }
     }

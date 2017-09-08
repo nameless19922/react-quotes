@@ -1,3 +1,7 @@
+export function typeObj(obj) {
+  return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+}
+
 export function formatDate(date) {
   const tmpDate = new Date(date * 1000);
   const getNumString = num => {
@@ -43,35 +47,41 @@ export function getPeriod(period) {
     case '1d':
       dateAgo = getDateAgo(date, 1);
       dateFrom = Date.UTC(dateAgo.getUTCFullYear(), dateAgo.getUTCMonth(), dateAgo.getUTCDate(), 0, 0)
+
       break;
 
     case '1m':
       dateAgo = getDateAgo(date, 30);
       dateFrom = Date.UTC(dateAgo.getUTCFullYear(), dateAgo.getUTCMonth(), dateAgo.getUTCDate(), 0, 0)
       resolution = 60;
+
       break;
 
     case '3m':
       dateAgo = getDateAgo(date, 90);
       dateFrom = Date.UTC(dateAgo.getUTCFullYear(), dateAgo.getUTCMonth(), dateAgo.getUTCDate(), 0, 0)
       resolution = 60;
+
       break;
 
     case '1y':
       dateAgo = getDateAgo(date, 365);
       dateFrom = Date.UTC(dateAgo.getUTCFullYear(), dateAgo.getUTCMonth(), dateAgo.getUTCDate(), 0, 0)
       resolution = 60;
+
       break;
 
     case '5y':
       dateAgo = getDateAgo(date, 1825);
       dateFrom = Date.UTC(dateAgo.getUTCFullYear(), dateAgo.getUTCMonth(), dateAgo.getUTCDate(), 0, 0)
       resolution = 'W';
+
       break;
 
     case 'max':
       dateFrom = Date.UTC(2008, 1, 1, 0, 0)
       resolution = 'W';
+
       break;
   }
 
@@ -85,27 +95,17 @@ export function getPeriod(period) {
 export const sort = {
   string: {
     up(first, second) {
-      if (first < second) {
-        return -1
-      }
+      first = first.toLowerCase();
+      second = second.toLowerCase();
 
-      if (first > second) {
-        return 1
-      }
-
-      return 0;
+      return first < second ? -1 : first > second ? 1 : 0;
     },
 
     down(first, second) {
-      if (first > second) {
-        return -1
-      }
+      first = first.toLowerCase();
+      second = second.toLowerCase();
 
-      if (first < second) {
-        return 1
-      }
-
-      return 0;
+      return first > second ? -1 : first < second ? 1 : 0;
     }
   },
 

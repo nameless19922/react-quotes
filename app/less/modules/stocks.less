@@ -80,7 +80,6 @@
     }
 
     &__table {
-        min-height: 495px;
         position: relative;
         margin-top: 30px;
 
@@ -157,8 +156,12 @@
 
         &-td,
         &-th {
-            flex: 0 1 25%;
+            flex: 0 1 20%;
             align-self: center;
+
+            @media (max-width: 1023px) {
+                flex-basis: 25%;
+            }
 
             @media (max-width: 767px) {
                 flex-basis: 33.333%;
@@ -172,6 +175,12 @@
         &-td,
         &-th {
             position: relative;
+
+            &._chart {
+                @media (max-width: 1023px) {
+                    display: none;
+                }
+            }
 
             &._price {
                 @media (max-width: 899px) {
@@ -199,20 +208,26 @@
             text-decoration: none;
 
             &::after {
+                content: @icon-arrow-key-bottom;
                 position: absolute;
                 top: -7px;
                 right: 0;
 
                 font-family: 'icomoon' !important;
                 font-size: 12px;
+                opacity: 0;
+                transform-origin: 45% 57%;
+                transition: all @transition-delay;
             }
 
             &._up::after {
-                content: @icon-arrow-key-bottom;
+                opacity: 1;
+                transform: rotateZ(0deg);
             }
 
             &._down::after {
-                content: @icon-arrow-key-top;
+                opacity: 1;
+                transform: rotateZ(180deg);
             }
         }
 
@@ -279,7 +294,7 @@
             position: absolute;
             top: -17px;
             left: 20px;
-            right: 40px;
+            right: 20px;
         }
 
         &-box &-value {
@@ -337,6 +352,23 @@
     &__tabs {
         &-item {
             display: none;
+        }
+    }
+
+    &__wrap {
+        min-height: 425px;
+        position: relative;
+    }
+
+    &__minichart {
+        text-align: center;
+
+        &-box {
+            display: inline-block;
+            width: 67px;
+            height: 35px;
+
+            opacity: .6;
         }
     }
 }

@@ -34,6 +34,10 @@ export function getQuote(classCode, securCode, period) {
     axios.get(`https://api.bcs.ru/quotesgroups/v2?classcode=${classCode}&securcode=${securCode}`).then(response => {
       let { dateTo, dateFrom, resolution } = getPeriod(period)
 
+      if (!response.data.d.length) {
+        throw { body: 'No data' };
+      }
+
       data = response.data.d[0];
 
       return axios.get(`https://api.bcs.ru/udfdatafeed/v1/history?symbol=${securCode}&resolution=${resolution}&from=${(dateFrom / 1000).toFixed(0)}&to=${(dateTo / 1000).toFixed(0)}`)

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Preloader from '../components/Preloader';
 import Chart from '../components/Chart';
+import DataMessage from '../components/DataMessage';
 import { formatValue } from '../utils';
 import { getQuote } from '../actions/quote';
 import { history } from '../store';
@@ -161,17 +162,12 @@ class Quote extends React.Component {
   }
 
   render() {
-    const { data, isRequest, period } = this.props;
+    const { data, isRequest, isFailure, period } = this.props;
     const delay = 200;
     const url = `/quote/${this.props.classCode}/${this.props.securCode}`;
+    const isData = Object.keys(data).length;
 
-    if (Object.keys(data).length) {
-      chartOptions.series = [{
-        type: 'area',
-        color: '#4fd669',
-        data: data.chart
-      }];
-
+    if (isData) {
       current.scale = data.scale;
       current.period = period;
     }
@@ -182,7 +178,7 @@ class Quote extends React.Component {
         <div className="stocks-item__box-value">
           <span>{ formatValue(data.close, data.scale) }</span>
           <span className={ (data.profit > 0 ? '_green' : '_red') }>
-            { formatValue(data.change, data.scale) } ({ data.profit > 0 ? '+' : '' }{ data.profit ? formatValue(data.profit * 100, 2) : '' + '%' })
+            { formatValue(data.change, data.scale) } { isData ? (data.profit > 0 ? '(+' : '(') : '' }{ isData ? formatValue(data.profit * 100, 2) + '%)' : '' }
           </span>
         </div>
         <div className="stocks-item__box-period">
@@ -190,7 +186,6 @@ class Quote extends React.Component {
             <NavLink to={ url + '/' +  item.param } className="stocks-item__box-filter" activeClassName="_current" key={ index }>{ item.name }</NavLink>
           )) }
         </div>
-
       </div>
     );
 
@@ -204,7 +199,8 @@ class Quote extends React.Component {
           { isRequest &&  <Preloader /> }
         </ReactCSSTransitionGroup>
         {  result }
-        { !isRequest && <Chart container="stocks-chart" options={ chartOptions } /> }
+        { isFailure && <DataMessage message="Данные отсутствуют. <br>Пожалуйста, попробуйте позже." /> }
+        { !isRequest && <Chart container="stocks-chart" options={ chartOptions } data={ data.chart } /> }
       </div>
     );
   }
