@@ -9,7 +9,9 @@ import DataMessage from '../components/DataMessage';
 import { getLeaders, leadersSort } from '../actions/leaders';
 import { history } from '../store';
 
-class LeadersTable extends React.Component {
+@withRouter
+@connect(mapStateToProps, mapDispatchToProps)
+export default class LeadersTable extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -90,32 +92,31 @@ class LeadersTable extends React.Component {
   }
 }
 
-export default withRouter(connect(
-  (state, ownProps) => {
-    const params = ownProps.match.params;
+function mapStateToProps(state, ownProps) {
+  const params = ownProps.match.params;
 
-    return {
-      data: state.leaders.data,
-      isRequest: state.leaders.isRequest,
-      isFailure: state.leaders.isFailure,
-      prop: state.leaders.sort.prop,
-      direction: state.leaders.sort.direction,
-      type: typeof params.to !== 'undefined' ? params.to : 'up'
-    }
-  },
-  dispatch => {
-    return {
-      getLeaders(type) {
-        if (type === 'up' || type === 'down') {
-          dispatch(getLeaders(type))
-        } else {
-          history.push('/leaders/up');
-        }
-      },
+  return {
+    data: state.leaders.data,
+    isRequest: state.leaders.isRequest,
+    isFailure: state.leaders.isFailure,
+    prop: state.leaders.sort.prop,
+    direction: state.leaders.sort.direction,
+    type: typeof params.to !== 'undefined' ? params.to : 'up'
+  }
+}
 
-      leadersSort(prop, direction) {
-        dispatch(leadersSort(prop, direction));
+function mapDispatchToProps(dispatch) {
+  return {
+    getLeaders(type) {
+      if (type === 'up' || type === 'down') {
+        dispatch(getLeaders(type))
+      } else {
+        history.push('/leaders/up');
       }
+    },
+
+    leadersSort(prop, direction) {
+      dispatch(leadersSort(prop, direction));
     }
   }
-)(LeadersTable));
+}

@@ -9,6 +9,10 @@ module.exports = {
           'es2015',
           'stage-2',
           'react'
+        ],
+        plugins: [
+          'transform-decorators-legacy',
+          'transform-async-to-generator'
         ]
       }
     }]

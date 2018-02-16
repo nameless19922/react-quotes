@@ -1,0 +1,35 @@
+.header {
+    padding: 12px 0;
+
+    border: 1px solid #ededed;
+
+    &__wrapper {
+        .clearfix();
+    }
+
+    &__logo {
+        float: left;
+
+        img {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    &__nav {
+        margin: 3px 0 0 30px;
+        float: left;
+
+        &-item {
+            color: @c-blue-dark;
+            font-size: 11px;
+            text-decoration: none;
+            text-transform: uppercase;
+
+            &:not(:first-child) {
+                margin-left: 20px;
+            }
+        }
+    }
+}

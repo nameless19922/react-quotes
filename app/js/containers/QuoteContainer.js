@@ -146,7 +146,9 @@ const links = [
   { param: 'max', name: 'max' }
 ];
 
-class Quote extends React.Component {
+@withRouter
+@connect(mapStateToProps, mapDispatchToProps)
+export default class Quote extends React.Component {
   componentDidMount() {
     const { classCode, securCode, period, getQuote } = this.props;
 
@@ -206,28 +208,27 @@ class Quote extends React.Component {
   }
 }
 
-export default withRouter(connect(
-  (state, ownProps) => {
-    const params = ownProps.match.params;
+function mapStateToProps(state, ownProps) {
+  const params = ownProps.match.params;
 
-    return {
-      data: state.quote.data,
-      isRequest: state.quote.isRequest,
-      isFailure: state.quote.isFailure,
-      classCode: params.classcode,
-      securCode: params.securcode,
-      period: params.period
-    }
-  },
-  dispatch => {
-    return {
-      getQuote(securCode, classCode, period) {
-        if (links.find(item => item.param === period)) {
-          dispatch(getQuote(securCode, classCode, period));
-        } else {
-          history.push(`/quote/${classCode}/${securCode}/1y`);
-        }
+  return {
+    data: state.quote.data,
+    isRequest: state.quote.isRequest,
+    isFailure: state.quote.isFailure,
+    classCode: params.classcode,
+    securCode: params.securcode,
+    period: params.period
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getQuote(securCode, classCode, period) {
+      if (links.find(item => item.param === period)) {
+        dispatch(getQuote(securCode, classCode, period));
+      } else {
+        history.push(`/quote/${classCode}/${securCode}/1y`);
       }
     }
   }
-)(Quote));
+}

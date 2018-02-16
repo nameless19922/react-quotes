@@ -1,4 +1,5 @@
 import { getPeriod } from '../utils';
+import api from '../api';
 
 export const QUOTE_REQUEST = 'QUOTE_REQUEST';
 export const QUOTE_SUCCESS = 'QUOTE_SUCCESS';
@@ -26,29 +27,28 @@ export function quoteRequest(isRequest) {
 }
 
 export function getQuote(classCode, securCode, period) {
-  return dispatch => {
-    let data = {};
+  return async dispatch => {
+    try {
+      let response,
+          data;
 
-    dispatch(quoteRequest(true));
+      dispatch(quoteRequest(true));
 
-    axios.get(`https://api.bcs.ru/quotesgroups/v2?classcode=${classCode}&securcode=${securCode}`).then(response => {
-      let { dateTo, dateFrom, resolution } = getPeriod(period)
+      response = await api.getQuoteInfo(classCode, securCode);
 
-      if (!response.data.d.length) {
-        throw { body: 'No data' };
-      }
+      if (!response.data.d.length) throw new Error({ body: 'No data' });
 
       data = response.data.d[0];
 
-      return axios.get(`https://api.bcs.ru/udfdatafeed/v1/history?symbol=${securCode}&resolution=${resolution}&from=${(dateFrom / 1000).toFixed(0)}&to=${(dateTo / 1000).toFixed(0)}`)
-    }).then(response => {
       let chartData = [],
-          tmp = response.data;
+          { dateTo, dateFrom, resolution } = getPeriod(period);
 
-      for (let i = 0; i < tmp.c.length; i++) {
+      response = await api.getQuoteHistory(securCode, resolution, dateFrom, dateTo);
+
+      for (let i = 0; i < response.data.c.length; i++) {
         chartData.push({
-          x: tmp.t[i] * 1000,
-          y: parseFloat(tmp.c[i].toFixed(data.scale))
+          x: response.data.t[i] * 1000,
+          y: parseFloat(response.data.c[i].toFixed(response.data.scale))
         });
       }
 
@@ -56,10 +56,10 @@ export function getQuote(classCode, securCode, period) {
 
       dispatch(quoteSuccess(data));
       dispatch(quoteRequest(false));
-    }).catch(response => {
+    } catch (response) {
       dispatch(quoteFailure(true, response.body));
       dispatch(quoteRequest(false));
       console.error(response);
-    });
+    }
   }
 }
